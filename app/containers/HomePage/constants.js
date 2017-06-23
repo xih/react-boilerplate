@@ -9,4 +9,13 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
-export const CHANGE_USERNAME = 'boilerplate/Home/CHANGE_USERNAME';
+export const CHANGE_USERNAME = 'boilerplate/Home/CHANGE_USERNAME'
+export const RECEIVE_CAROUSEL = 'xingv6/Home/RECEIVE_CAROUSEL'
+export const REQUEST_CAROUSEL = 'xingv6/Home/REQUEST_CAROUSEL'
+export const INVALIDATE_CAROUSEL = 'xingv6/Home/INVALIDATE_CAROUSEL'
+export const LOAD_CAROUSEL = 'xingv6/Home/LOAD_CAROUSEL'
+
+
+export const LOAD_CAROUSELS = 'xingv6/Home/LOAD_CAROUSEL'
+export const LOAD_CAROUSELS_SUCCESS = 'xingv6/Home/LOAD_CAROUSELS_SUCCESS'
+export const LOAD_CAROUSELS_ERROR = 'xingv6/Home/LOAD_CAROUSELS_ERROR'

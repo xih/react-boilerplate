@@ -20,21 +20,31 @@ import Input from './Input';
 import Section from './Section';
 import messages from './messages';
 import { loadRepos } from '../App/actions';
-import { changeUsername } from './actions';
-import { makeSelectUsername } from './selectors';
+import { changeUsername, loadCarousels } from './actions';
+import { makeSelectUsername, makeCarouselLoading, makeCarouselError, makeCarousels } from './selectors'
+import { Carousel } from 'react-bootstrap'
+
+import styled from 'styled-components'
+import HomeCarousel from './HomeCarousel'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
    * when initial state username is not null, submit the form to load repos
    */
   componentDidMount() {
+    this.props.fetchCarousel()
     if (this.props.username && this.props.username.trim().length > 0) {
       this.props.onSubmitForm();
     }
   }
 
   render() {
-    const { loading, error, repos } = this.props;
+    const { loading, error, repos, carouselLoading, carouselError, carousels } = this.props;
+    const carouselProps = {
+      carouselLoading,
+      carouselError,
+      carousels
+    }
     const reposListProps = {
       loading,
       error,
@@ -50,6 +60,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
         />
         <div>
+          {/* {console.log('props:', this.props)}
+          {console.log('carouselLoading:', carouselLoading)}
+          {console.log('carouselError:', carouselError)}
+          {console.log('carousels:', carousel)} */}
           <CenteredSection>
             <H2>
               <FormattedMessage {...messages.startProjectHeader} />
@@ -80,6 +94,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             <ReposList {...reposListProps} />
           </Section>
         </div>
+        <div className='container-fluid'>
+          <HomeCarousel {...carouselProps}/>
+        </div>
+
       </article>
     );
   }
@@ -87,6 +105,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
 HomePage.propTypes = {
   loading: React.PropTypes.bool,
+  carouselLoading: React.PropTypes.bool,
   error: React.PropTypes.oneOfType([
     React.PropTypes.object,
     React.PropTypes.bool,
@@ -100,6 +119,8 @@ HomePage.propTypes = {
   onChangeUsername: React.PropTypes.func,
 };
 
+
+
 export function mapDispatchToProps(dispatch) {
   return {
     onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
@@ -107,6 +128,7 @@ export function mapDispatchToProps(dispatch) {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(loadRepos());
     },
+    fetchCarousel: (evt) => dispatch(loadCarousels())
   };
 }
 
@@ -115,6 +137,9 @@ const mapStateToProps = createStructuredSelector({
   username: makeSelectUsername(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
+  carouselLoading: makeCarouselLoading(),
+  carouselError: makeCarouselError(),
+  carousels: makeCarousels()
 });
 
 // Wrap the component to inject dispatch and state into it

@@ -17,7 +17,54 @@
 
 import {
   CHANGE_USERNAME,
-} from './constants';
+  LOAD_CAROUSELS,
+  LOAD_CAROUSELS_SUCCESS,
+  LOAD_CAROUSELS_ERROR
+} from './constants'
+
+/**
+ * Load the carousel, this action starts the request saga
+ *
+ * @return {object} An action object with a type of LOAD_CAROUSELS
+ */
+export function loadCarousels() {
+  console.log('break')
+  return {
+    type: LOAD_CAROUSELS,
+  };
+}
+
+/**
+ * Dispatched when the carousels are loaded by the request saga
+ *
+ * @param  {array} carousel The carousel data
+ *
+ * @return {object}      An action object with a type of LOAD_CAROUSELS_SUCCESS passing the repos
+ */
+export function carouselsLoaded(carousel) {
+  // console.log('load carousels')
+  // console.log(carousel)
+  // console.log("i got the data")
+  return {
+    type: LOAD_CAROUSELS_SUCCESS,
+    carousel,
+  }
+}
+
+/**
+ * Dispatched when loading the carousels fails
+ *
+ * @param  {object} error The error
+ *
+ * @return {object}       An action object with a type of LOAD_CAROUSELS_ERROR passing the error
+ */
+ export function carouselLoadingError(error) {
+   console.log('carousels_error')
+   return {
+     type: LOAD_CAROUSELS_ERROR,
+     error
+   }
+ }
 
 /**
  * Changes the input field of the form
